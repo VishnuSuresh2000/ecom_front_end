@@ -23,6 +23,9 @@ class Product {
 class CategorySection {
   String name;
   String _id;
+
+  CategorySection();
+
   Map<String, dynamic> toMap() {
     return {'_id': _id, 'name': name};
   }

@@ -11,7 +11,7 @@ class CategoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: "Name : ${category.name}".text.xl.make(),
+      title: "Name : ${category.name.firstLetterUpperCase()}".text.xl.make(),
       children: [
         callback("category",category.id)
       ],

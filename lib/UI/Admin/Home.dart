@@ -5,6 +5,7 @@ import 'CustomSection.dart';
 import 'package:ecom_front_end/Sections/Channels.dart';
 import 'package:ecom_front_end/UI/Admin/View/Category/view.dart';
 import 'package:ecom_front_end/Sections/Modules.dart';
+import 'package:ecom_front_end/UI/Admin/View/Category/AddOrUpdatePage.dart';
 
 class AdminHome extends StatefulWidget {
   static String route = '/adminHome';
@@ -19,6 +20,8 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => addOrUpdateCategory(context, true)),
       body: VxBox(
           child: ListView(
         children: [
@@ -34,9 +37,10 @@ class _AdminHomeState extends State<AdminHome> {
             alignment: MainAxisAlignment.spaceAround,
           ),
           VxBox().make().h4(context),
-          VStack([
-            viewSections().wHalf(context).hFull(context)
-          ],crossAlignment: CrossAxisAlignment.center,)
+          VStack(
+            [viewSections().wHalf(context).hFull(context)],
+            crossAlignment: CrossAxisAlignment.center,
+          )
         ],
       )).make().p64(),
     );
@@ -65,27 +69,34 @@ class _AdminHomeState extends State<AdminHome> {
 
   Widget switchSections(Map<String, dynamic> data) {
     if (!data['error']) {
-      List temp=data['data'];
-      return ListView.builder(itemBuilder: (BuildContext context, int index) {
-        switch (api) {
-          case apiNames.category:
-            return CategoryView(
-              category: CategorySection.fromMap(temp[index]),
-              callback: (String msg,String id)=>updateDeleteBlock(msg, id),
-            ).wHalf(context);
-          case apiNames.product:
-            // TODO: Handle this case.
-            break;
-          case apiNames.farmer:
-            // TODO: Handle this case.
-            break;
-          case apiNames.seller:
-            // TODO: Handle this case.
-            break;
-        }
-        return Container();
-      },
-      itemCount: temp.length,
+      List temp = data['data'];
+      return ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          switch (api) {
+            case apiNames.category:
+              return CategoryView(
+                category: CategorySection.fromMap(temp[index]),
+                callback: (String msg, String id) => updateDeleteBlock(
+                  msg,
+                  id,
+                  ()=>addOrUpdateCategory(
+                      context, false, CategorySection.fromMap(temp[index])),
+                  (id)=>deleteRecord(context, ApiNames.getApiNames(api), id,AdminHome.route)
+                ),
+              ).wHalf(context);
+            case apiNames.product:
+              // TODO: Handle this case.
+              break;
+            case apiNames.farmer:
+              // TODO: Handle this case.
+              break;
+            case apiNames.seller:
+              // TODO: Handle this case.
+              break;
+          }
+          return Container();
+        },
+        itemCount: temp.length,
       );
     }
     return errorBlock("${data['msg']}");
