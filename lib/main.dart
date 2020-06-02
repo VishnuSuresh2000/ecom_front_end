@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'UI/Admin/Home.dart';
+// import 'Test/test.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
         AdminHome.route:(context)=>AdminHome()
       },
       debugShowCheckedModeBanner: false,
-      home: AdminHome(),
+      home:AdminHome(),
     );
   }
 }

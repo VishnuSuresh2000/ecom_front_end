@@ -1,6 +1,6 @@
 import 'package:ecom_front_end/ApiCalls/Api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 
 Widget topLayerButton(String name, bool status, Function callback) {
@@ -18,8 +18,12 @@ Widget errorBlock(String msg) {
 }
 
 void deleteRecord(BuildContext context,String section,String id,String route)async{
-  var res=await ApiCalls.delete(section, id);
-  showMsgAlertAndRoute(context, res, route);
+  try {
+    var res=await ApiCalls.delete(section, id);
+  showMsgAlertAndRoute(context, res, route,false);
+  } catch (e) {
+    showMsgAlertAndRoute(context, "$e", route,false);
+  }
 }
 
 Widget updateDeleteBlock(
@@ -44,15 +48,15 @@ Widget updateDeleteBlock(
 }
 
 void showMsgAlertAndRoute(
-    BuildContext context, Map<String, dynamic> response, String route) {
+    BuildContext context, String response, String route,bool error) {
   showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
             title: Text(
-              "${response['msg']}",
+              "$response",
               style: TextStyle(
                   fontSize: 20,
-                  color: response['error'] ? Vx.red800 : Vx.blue800),
+                  color: error ? Vx.red800 : Vx.blue800),
             ),
             actions: [
               RaisedButton(

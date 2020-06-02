@@ -45,11 +45,15 @@ void addOrUpdateCategory(BuildContext context, bool createOrUpdate,
                         onPressed: () async {
                           if(_form.currentState.validate()){
                             _form.currentState.save();
-                            var res = createOrUpdate
+                            try {
+                              var res = createOrUpdate
                               ? await ApiCalls.create("$api", temp.toMap())
                               : await ApiCalls.update(
                                   "$api", temp.id, temp.toMap());
-                          showMsgAlertAndRoute(context, res, AdminHome.route);
+                          showMsgAlertAndRoute(context, res, AdminHome.route,false);
+                            } catch (e) {
+                              showMsgAlertAndRoute(context,"$e", AdminHome.route,true);
+                            }
                           }
                         },
                         child: "$channel".text.make(),

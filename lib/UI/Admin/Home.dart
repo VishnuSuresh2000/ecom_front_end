@@ -1,4 +1,5 @@
 import 'package:ecom_front_end/ApiCalls/Api.dart';
+import 'package:ecom_front_end/UI/Admin/View/Product/view.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'CustomSection.dart';
@@ -6,6 +7,7 @@ import 'package:ecom_front_end/Sections/Channels.dart';
 import 'package:ecom_front_end/UI/Admin/View/Category/view.dart';
 import 'package:ecom_front_end/Sections/Modules.dart';
 import 'package:ecom_front_end/UI/Admin/View/Category/AddOrUpdatePage.dart';
+import 'package:ecom_front_end/UI/Admin/View/Product/AddOrUpdate.dart';
 
 class AdminHome extends StatefulWidget {
   static String route = '/adminHome';
@@ -20,8 +22,8 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          onPressed: () => addOrUpdateCategory(context, true)),
+      floatingActionButton:
+          FloatingActionButton(onPressed: () => switchCreatePhase(context)),
       body: VxBox(
           child: ListView(
         children: [
@@ -38,11 +40,11 @@ class _AdminHomeState extends State<AdminHome> {
           ),
           VxBox().make().h4(context),
           VStack(
-            [viewSections().wHalf(context).hFull(context)],
+            [viewSections().wHalf(context).hThreeForth(context)],
             crossAlignment: CrossAxisAlignment.center,
           )
         ],
-      )).make().p64(),
+      )).make().p32(),
     );
   }
 
@@ -61,32 +63,60 @@ class _AdminHomeState extends State<AdminHome> {
                   .make()
                   .wh10(context);
             case ConnectionState.done:
+              if (snapshot.hasError) {
+                return errorBlock("${snapshot.error.toString()}from futher builder");
+              }
               return switchSections(snapshot.data);
           }
           return null;
         });
   }
 
-  Widget switchSections(Map<String, dynamic> data) {
-    if (!data['error']) {
-      List temp = data['data'];
+  void switchCreatePhase(BuildContext context) {
+    switch (api) {
+      case apiNames.category:
+        addOrUpdateCategory(context, true);
+        break;
+      case apiNames.product:
+        addOrUpdateProduct(context, true);
+        break;
+      case apiNames.farmer:
+        // TODO: Handle this case.
+        break;
+      case apiNames.seller:
+        // TODO: Handle this case.
+        break;
+    }
+  }
+
+  Widget switchSections(List data) {
       return ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           switch (api) {
             case apiNames.category:
               return CategoryView(
-                category: CategorySection.fromMap(temp[index]),
+                key: ValueKey(index),
+                category: CategorySection.fromMap(data[index]),
                 callback: (String msg, String id) => updateDeleteBlock(
-                  msg,
-                  id,
-                  ()=>addOrUpdateCategory(
-                      context, false, CategorySection.fromMap(temp[index])),
-                  (id)=>deleteRecord(context, ApiNames.getApiNames(api), id,AdminHome.route)
-                ),
-              ).wHalf(context);
+                    msg,
+                    id,
+                    () => addOrUpdateCategory(
+                        context, false, CategorySection.fromMap(data[index])),
+                    (id) => deleteRecord(context, ApiNames.getApiNames(api), id,
+                        AdminHome.route)),
+              );
             case apiNames.product:
-              // TODO: Handle this case.
-              break;
+              return ProductView(
+                key: ValueKey(index),
+                product: Product.fromMap(data[index]),
+                callback: (String msg, String id) => updateDeleteBlock(
+                    msg,
+                    id,
+                    () => addOrUpdateProduct(
+                        context, false, Product.fromMap(data[index])),
+                    (id) => deleteRecord(context, ApiNames.getApiNames(api), id,
+                        AdminHome.route)),
+              );
             case apiNames.farmer:
               // TODO: Handle this case.
               break;
@@ -96,9 +126,8 @@ class _AdminHomeState extends State<AdminHome> {
           }
           return Container();
         },
-        itemCount: temp.length,
-      );
-    }
-    return errorBlock("${data['msg']}");
+        itemCount: data.length,
+      ).wHalf(context);
+ 
   }
 }

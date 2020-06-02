@@ -1,21 +1,26 @@
 class Product {
   String name;
-  String dis;
+  String description;
   String _id;
   CategorySection category;
   Map<String, dynamic> toMap() {
-    return {'_id': _id, "name": name, "dis": dis,'category':category.toMap()};
+    return {
+      '_id': _id,
+      "name": name,
+      "description": description,
+      'category': category.toMap()
+    };
   }
 
   Product();
 
   Product.fromMap(Map<String, dynamic> temp) {
-    this.name = temp['_id'];
+    this._id = temp['_id'];
     this.name = temp['name'];
-    this.dis = temp['dis'];
-    this.category=CategorySection.fromMap(temp['category']);
+    this.description = temp['description'];
+    this.category = CategorySection.fromMap(temp['category']);
   }
-   String get id{
+  String get id {
     return this._id;
   }
 }
@@ -34,7 +39,7 @@ class CategorySection {
     this.name = temp['name'];
     this._id = temp['_id'];
   }
-   String get id{
+  String get id {
     return this._id;
   }
 }
@@ -57,12 +62,12 @@ class CommonProfile {
 
   CommonProfile();
 
-  String get id{
+  String get id {
     return this._id;
   }
 
   CommonProfile.fromMap(Map<String, dynamic> temp) {
-    this.name = temp['_id'];
+    this._id = temp['_id'];
     this.name = temp['name'];
     this.address = temp['address'];
     this.phoneNumber = temp['phoneNumber'];
