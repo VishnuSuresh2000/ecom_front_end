@@ -69,4 +69,22 @@ class ApiCalls {
       throw e;
     }
   }
+
+  static Future customGet(String section,String urlSection) async{
+    try {
+      var res = await _client.get(
+        "$_host/${section.toLowerCase()}/$urlSection",
+      );
+      var obj = json.decode(res.body);
+      if (res.statusCode == 400) {
+        throw Exception(obj['data']);
+      }
+      return obj['data'];
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+
+  }
+
 }

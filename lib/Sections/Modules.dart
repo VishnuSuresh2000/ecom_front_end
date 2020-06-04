@@ -50,13 +50,15 @@ class CommonProfile {
   int phoneNumber;
   String email;
   String _id;
+  bool isVerified;
   Map<String, dynamic> toMap() {
     return {
       '_id': _id,
       'name': name,
       'address': address,
       'phoneNumber': phoneNumber,
-      'email': email
+      'email': email,
+      'isVerified':isVerified
     };
   }
 
@@ -72,5 +74,6 @@ class CommonProfile {
     this.address = temp['address'];
     this.phoneNumber = temp['phoneNumber'];
     this.email = temp['email'];
+    this.isVerified=temp['isVerified'];
   }
 }
