@@ -1,11 +1,13 @@
-enum apiNames { product, farmer, seller, category }
+enum apiNames { product, farmer, seller, category,poductList,cart }
 
 class ApiNames {
   static Map api = <apiNames, String>{
     apiNames.category: "category",
     apiNames.product: "product",
     apiNames.farmer: "farmer",
-    apiNames.seller: "seller"
+    apiNames.seller: "seller",
+    apiNames.poductList:"productlist",
+    apiNames.cart:"cart"
   };
   static String getApiNames(apiNames data) {
     return api[data];

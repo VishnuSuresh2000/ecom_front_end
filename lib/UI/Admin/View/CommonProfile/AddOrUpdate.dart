@@ -108,10 +108,10 @@ void addOrUpdateCommonProfile(
                                           "$api", temp.toMap())
                                       : await ApiCalls.update(
                                           "$api", temp.id, temp.toMap());
-                                  showMsgAlertAndRoute(
+                                  showMsgAlertAndNamedRoute(
                                       context, res, AdminHome.route, false);
                                 } catch (e) {
-                                  showMsgAlertAndRoute(
+                                  showMsgAlertAndNamedRoute(
                                       context, "$e", AdminHome.route, true);
                                 }
                               }

@@ -1,19 +1,19 @@
+import 'dart:async';
 import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class ApiCalls {
-  static var _client = http.Client();
+  static var _client = Dio();
   static String _host = "http://localhost:8080";
 
   static Future<List> read(String section) async {
     try {
       var res = await _client.get("$_host/${section.toLowerCase()}");
-      var obj = json.decode(res.body);
-      if (res.statusCode == 400) {
-        throw Exception(obj['data']);
-      }
-      return obj['data'];
+
+      return res.data['data'];
+    } on DioError catch (e) {
+      print(e);
+      throw Exception(e.response.data['data']);
     } catch (e) {
       print(e);
       throw e;
@@ -24,13 +24,13 @@ class ApiCalls {
       String section, Map<String, dynamic> data) async {
     try {
       var res = await _client.post("$_host/${section.toLowerCase()}",
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(data));
-      var obj = json.decode(res.body);
-      if (res.statusCode == 400) {
-        throw Exception(obj['data']);
-      }
-      return obj['data'];
+          options: Options(headers: {"Content-Type": "application/json"}),
+          data: jsonEncode(data));
+
+      return res.data['data'];
+    } on DioError catch (e) {
+      print(e);
+      throw Exception(e.response.data['data']);
     } catch (e) {
       print(e);
       throw e;
@@ -41,13 +41,13 @@ class ApiCalls {
       String section, String id, Map<String, dynamic> data) async {
     try {
       var res = await _client.put("$_host/${section.toLowerCase()}/$id",
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(data));
-      var obj = json.decode(res.body);
-      if (res.statusCode == 400) {
-        throw Exception(obj['data']);
-      }
-      return obj['data'];
+          options: Options(headers: {"Content-Type": "application/json"}),
+          data: jsonEncode(data));
+
+      return res.data['data'];
+    } on DioError catch (e) {
+      print(e);
+      throw Exception(e.response.data['data']);
     } catch (e) {
       print(e);
       throw e;
@@ -59,32 +59,68 @@ class ApiCalls {
       var res = await _client.delete(
         "$_host/${section.toLowerCase()}/$id",
       );
-      var obj = json.decode(res.body);
-      if (res.statusCode == 400) {
-        throw Exception(obj['data']);
-      }
-      return obj['data'];
+      return res.data['data'];
+    } on DioError catch (e) {
+      print(e);
+      throw Exception(e.response.data['data']);
     } catch (e) {
       print(e);
       throw e;
     }
   }
 
-  static Future customGet(String section,String urlSection) async{
+  static Future customGet(String section, String urlSection,[Map body]) async {
     try {
       var res = await _client.get(
         "$_host/${section.toLowerCase()}/$urlSection",
+        
       );
-      var obj = json.decode(res.body);
-      if (res.statusCode == 400) {
-        throw Exception(obj['data']);
-      }
-      return obj['data'];
+      return res.data['data'];
+    } on DioError catch (e) {
+      throw Exception(e.response.data['data']);
     } catch (e) {
       print(e);
       throw e;
     }
-
   }
 
+  static Future customPut(
+      String section, String urlSection, Map<String, dynamic> data) async {
+    try {
+      var res = await _client.put(
+          "$_host/${section.toLowerCase()}/$urlSection",
+          options: Options(headers: {"Content-Type": "application/json"}),
+          data: jsonEncode(data));
+      return res.data['data'];
+    } on DioError catch (e) {
+      throw Exception(e.response.data['data']);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+  static Future customPost(
+      String section, String urlSection, Map<String, dynamic> data) async {
+    try {
+      var res = await _client.post(
+          "$_host/${section.toLowerCase()}/$urlSection",
+          options: Options(headers: {"Content-Type": "application/json"}),
+          data: jsonEncode(data));
+      return res.data['data'];
+    } on DioError catch (e) {
+      throw Exception(e.response.data['data']);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+
+  // static readStreamData() async {
+  //   Response<ResponseBody>  res = await _client.get("http://localhost:8080/productlist/",
+  //       options: Options(responseType: ResponseType.stream));
+  //   // print(res.data.stream);
+  //   res.data.stream.transform(StreamTransformer.fromBind((stream) => ));
+
+  // }
 }

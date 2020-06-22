@@ -50,9 +50,9 @@ void addOrUpdateCategory(BuildContext context, bool createOrUpdate,
                               ? await ApiCalls.create("$api", temp.toMap())
                               : await ApiCalls.update(
                                   "$api", temp.id, temp.toMap());
-                          showMsgAlertAndRoute(context, res, AdminHome.route,false);
+                          showMsgAlertAndNamedRoute(context, res, AdminHome.route,false);
                             } catch (e) {
-                              showMsgAlertAndRoute(context,"$e", AdminHome.route,true);
+                              showMsgAlertAndNamedRoute(context,"$e", AdminHome.route,true);
                             }
                           }
                         },

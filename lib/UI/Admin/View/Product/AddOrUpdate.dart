@@ -2,7 +2,9 @@ import 'package:ecom_front_end/ApiCalls/Api.dart';
 import 'package:ecom_front_end/Sections/Modules.dart';
 import 'package:ecom_front_end/UI/Admin/CustomSection.dart';
 import 'package:ecom_front_end/UI/Admin/Home.dart';
+import 'package:ecom_front_end/UI/Admin/View/Product/state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
@@ -41,6 +43,7 @@ void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
                     List temp2 = snapshot.data;
                     List<CategorySection> cat =
                         temp2.map((e) => CategorySection.fromMap(e)).toList();
+                    createOrUpdate?temp.inKg=true:null;
                     return AlertDialog(
                       content: VxBox(
                           child: ListView(
@@ -116,6 +119,24 @@ void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
                                     },
                                   ),
                                   VxBox().make().h4(context),
+                                  ChangeNotifierProvider(
+                                    create: (context) => ProductState(),
+                                    child: Consumer<ProductState>(builder:
+                                        (BuildContext context, ls, child) {
+                                      return CheckboxListTile(
+                                        value: createOrUpdate
+                                          ?  ls.inKg
+                                          :  temp.inKg,
+                                        onChanged: (value) {
+                                          ls.inKg = value;
+                                          temp.inKg = ls.inKg;
+                                        
+                                        },
+                                        title: "In Kg".text.make(),
+                                      );
+                                    }),
+                                  ),
+                                  VxBox().make().h4(context),
                                   Flex(
                                     direction: Axis.horizontal,
                                     children: [
@@ -123,7 +144,6 @@ void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
                                         onPressed: () async {
                                           if (_form.currentState.validate()) {
                                             _form.currentState.save();
-
                                             try {
                                               var res = createOrUpdate
                                                   ? await ApiCalls.create(
@@ -133,10 +153,10 @@ void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
                                                       temp.id,
                                                       temp.toMap());
 
-                                              showMsgAlertAndRoute(context, res,
-                                                  AdminHome.route, false);
+                                              showMsgAlertAndNamedRoute(context,
+                                                  res, AdminHome.route, false);
                                             } catch (e) {
-                                              showMsgAlertAndRoute(context,
+                                              showMsgAlertAndNamedRoute(context,
                                                   "$e", AdminHome.route, true);
                                             }
                                           }

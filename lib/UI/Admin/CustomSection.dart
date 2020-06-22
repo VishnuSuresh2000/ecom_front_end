@@ -1,6 +1,6 @@
 import 'package:ecom_front_end/ApiCalls/Api.dart';
+import 'package:ecom_front_end/UI/Admin/Home.dart';
 import 'package:flutter/material.dart';
-
 import 'package:velocity_x/velocity_x.dart';
 
 Widget topLayerButton(String name, bool status, Function callback) {
@@ -17,12 +17,13 @@ Widget errorBlock(String msg) {
   return "$msg".text.red500.xl4.make().centered();
 }
 
-void deleteRecord(BuildContext context,String section,String id,String route)async{
+void deleteRecord(
+    BuildContext context, String section, String id, String route) async {
   try {
-    var res=await ApiCalls.delete(section, id);
-  showMsgAlertAndRoute(context, res, route,false);
+    var res = await ApiCalls.delete(section, id);
+    showMsgAlertAndNamedRoute(context, res, route, false);
   } catch (e) {
-    showMsgAlertAndRoute(context, "$e", route,false);
+    showMsgAlertAndNamedRoute(context, "$e", route, false);
   }
 }
 
@@ -37,35 +38,69 @@ Widget updateDeleteBlock(
         child: "Update".text.blue700.make(),
         color: Vx.blue300,
       ),
-      RaisedButton(
-        onPressed: () => delete(id),
-        child: "Delete".text.red700.make(),
-        color: Vx.red300,
-      )
+      deleteBlock(id, delete)
     ],
     mainAxisAlignment: MainAxisAlignment.spaceAround,
   );
 }
 
-void showMsgAlertAndRoute(
-    BuildContext context, String response, String route,bool error) {
+Widget deleteBlock(String id, Function delete) {
+  return RaisedButton(
+    onPressed: () => delete(id),
+    child: "Delete".text.red700.make(),
+    color: Vx.red300,
+  );
+}
+
+void showMsgAlertAndRoute(BuildContext context, String response, Function route,
+    bool error, String name) {
   showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
             title: Text(
               "$response",
               style: TextStyle(
-                  fontSize: 20,
-                  color: error ? Vx.red800 : Vx.blue800),
+                  fontSize: 20, color: error ? Vx.red800 : Vx.blue800),
             ),
             actions: [
               RaisedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(route, (route) => false);
-                },
-                child: Text("${route.replaceFirst(RegExp(r'0'), " ")}"),
+                onPressed: () => route(),
+                child: Text("$name"),
               ).centered()
             ],
           ));
+}
+
+void showMsgAlertAndNamedRoute(
+    BuildContext context, String response, String route, bool error) {
+  showMsgAlertAndRoute(context, response, () {
+    Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+  }, error, route.replaceFirst(RegExp(r'0'), " "));
+}
+
+Widget verifiedButton(
+    BuildContext context, String section, String id, bool value) {
+  return RaisedButton(
+    onPressed: () async => toVerify(context, section, id, !value),
+    child: "${!value ? 'Verify' : 'Un Verify'}"
+        .text
+        .xl
+        .color(!value ? Vx.blue800 : Vx.red800)
+        .make(),
+  );
+}
+
+void toVerify(
+    BuildContext context, String section, String id, bool value) async {
+  var temp;
+  bool isError;
+  try {
+    temp = await ApiCalls.customPut("$section", "verify/$value", {"id": id});
+    isError = false;
+  } catch (e) {
+    temp = e;
+    isError = true;
+  } finally {
+    showMsgAlertAndNamedRoute(context, temp, AdminHome.route, isError);
+  }
 }

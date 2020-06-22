@@ -18,6 +18,9 @@ class ProductView extends StatelessWidget {
          ListTile(
           title: "Category\t:\t${product.category.name.firstLetterUpperCase()}".text.make(),
         ),
+        ListTile(
+          title: "In Kg\t:\t${product.inKg}".text.make(),
+        ),
         callback("Product",product.id)
       ],
     ).card.make();

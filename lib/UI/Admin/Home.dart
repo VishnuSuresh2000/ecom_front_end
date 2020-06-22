@@ -1,6 +1,8 @@
 import 'package:ecom_front_end/ApiCalls/Api.dart';
 import 'package:ecom_front_end/UI/Admin/View/CommonProfile/view.dart';
 import 'package:ecom_front_end/UI/Admin/View/Product/view.dart';
+import 'package:ecom_front_end/UI/Admin/View/ProductList/Add.dart';
+import 'package:ecom_front_end/UI/Admin/View/ProductList/view.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'CustomSection.dart';
@@ -85,8 +87,13 @@ class _AdminHomeState extends State<AdminHome> {
         break;
       case apiNames.farmer:
       case apiNames.seller:
-       addOrUpdateCommonProfile(
+        addOrUpdateCommonProfile(
             context, true, ApiNames.getApiNames(api).firstLetterUpperCase());
+        break;
+      case apiNames.poductList:
+        addProductList(context);
+        break;
+      default:
         break;
     }
   }
@@ -127,10 +134,19 @@ class _AdminHomeState extends State<AdminHome> {
                   msg,
                   id,
                   () => addOrUpdateCommonProfile(
-                      context, false, ApiNames.getApiNames(api),CommonProfile.fromMap(data[index])),
+                      context,
+                      false,
+                      ApiNames.getApiNames(api),
+                      CommonProfile.fromMap(data[index])),
                   (id) => deleteRecord(
                       context, ApiNames.getApiNames(api), id, AdminHome.route)),
             );
+          case apiNames.poductList:
+            return ProductListView(
+              productlist: ProductList.fromMap(data[index]),
+            );
+          default:
+            break;
         }
         return Container();
       },

@@ -1,7 +1,7 @@
+import 'package:ecom_front_end/UI/Customer/Cart/CartHome.dart';
+import 'package:ecom_front_end/UI/Customer/Home.dart';
 import 'package:flutter/material.dart';
 import 'UI/Admin/Home.dart';
-// import 'Test/test.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -11,7 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        AdminHome.route:(context)=>AdminHome()
+        AdminHome.route:(context)=>AdminHome(),
+        CustomerHome.route:(context)=>CustomerHome(),
+        CartHome.route:(context)=>CartHome()
       },
       debugShowCheckedModeBanner: false,
       home:AdminHome(),
