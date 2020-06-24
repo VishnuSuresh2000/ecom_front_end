@@ -171,6 +171,7 @@ class Cart {
   String customerId;
   ProductList productList;
   int count;
+  bool completed;
 
   Cart.fromMap(Map<String, dynamic> temp) {
     this._id = temp['_id'];
@@ -178,6 +179,7 @@ class Cart {
     this.customerId = temp['customer_id'];
     this.productList = ProductList.fromMapMinimal(temp['productlist_id']);
     this.count = temp['count'];
+    this.completed=temp['completed']==null?false:temp['completed'];
   }
   Cart();
   String get id {

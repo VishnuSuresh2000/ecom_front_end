@@ -3,6 +3,7 @@ import 'package:ecom_front_end/Sections/Channels.dart';
 import 'package:ecom_front_end/Sections/Modules.dart';
 import 'package:ecom_front_end/UI/Admin/CustomSection.dart';
 import 'package:ecom_front_end/UI/Customer/Cart/view.dart';
+import 'package:ecom_front_end/UI/Customer/Home.dart';
 import 'package:ecom_front_end/UI/Customer/UrlForCustomers.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -22,6 +23,10 @@ class _CartHomeState extends State<CartHome> {
       appBar: AppBar(
         title: "Cart".text.make(),
         centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                context, CustomerHome.route, (route) => false)),
       ),
       body: VxBox(
           child: FutureBuilder(
@@ -42,16 +47,11 @@ class _CartHomeState extends State<CartHome> {
                       return errorBlock(
                           "${snapshot.error.toString()}from futher builder");
                     }
-                    // return Container(
-                    //   child: snapshot.data.toString().text.make(),
-                    // );
-
                     List data = snapshot.data;
                     return ListView.builder(
                         itemCount: data.length,
                         itemBuilder: (BuildContext context, int index) {
-                          Cart temp=Cart.fromMap(data[index]);
-                          
+                          Cart temp = Cart.fromMap(data[index]);
                           return CartView(
                             cart: temp,
                           );

@@ -26,6 +26,9 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: "Admin Home".text.make(),
+      ),
       floatingActionButton:
           FloatingActionButton(onPressed: () => switchCreatePhase(context)),
       body: VxBox(

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class ApiCalls {
-  static bool dev=false;
+  static bool dev=true;
   static var _client = Dio();
   static String _host = dev ?"http://localhost:8080":"https://immense-meadow-48383.herokuapp.com";
 
@@ -70,7 +70,7 @@ class ApiCalls {
     }
   }
 
-  static Future customGet(String section, String urlSection,[Map body]) async {
+  static Future customGet(String section, String urlSection) async {
     try {
       var res = await _client.get(
         "$_host/${section.toLowerCase()}/$urlSection",

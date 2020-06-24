@@ -2,6 +2,7 @@ import 'package:ecom_front_end/ApiCalls/Api.dart';
 import 'package:ecom_front_end/Sections/Channels.dart';
 import 'package:ecom_front_end/Sections/Modules.dart';
 import 'package:ecom_front_end/UI/Admin/CustomSection.dart';
+import 'package:ecom_front_end/UI/Customer/Cart/CartHome.dart';
 import 'package:ecom_front_end/UI/Customer/ProductList/view.dart';
 import 'package:ecom_front_end/UI/Customer/UrlForCustomers.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 class CustomerHome extends StatefulWidget {
   static String route = "CustomerHome";
-  static String tempUserId="5eef605d8c9c2135341dde77";
+  static bool dev=false;
+  static String tempUserId = dev? "5ef361d4ed35de1b9049ef02":"5eef605d8c9c2135341dde77";
   @override
   _CustomerHomeState createState() => _CustomerHomeState();
 }
@@ -18,6 +20,16 @@ class _CustomerHomeState extends State<CustomerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: "Customer Home".text.make(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CartHome(
+                  customer: CustomerHome.tempUserId,
+                ))),
+        child: "Cart".text.make(),
+      ),
       body: VxBox(
               child: ListView(
         scrollDirection: Axis.vertical,
