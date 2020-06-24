@@ -36,7 +36,7 @@ class CommonProfileView extends StatelessWidget {
               commonProfile.id,
               commonProfile.isVerified == null
                   ? false
-                  : !commonProfile.isVerified),
+                  : commonProfile.isVerified),
         ),
         callback("commonProfile", commonProfile.id)
       ],
