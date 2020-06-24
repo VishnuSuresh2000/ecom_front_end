@@ -1,4 +1,5 @@
 import 'package:ecom_front_end/ApiCalls/Api.dart';
+import 'package:ecom_front_end/SwitchView.dart';
 import 'package:ecom_front_end/UI/Admin/View/CommonProfile/view.dart';
 import 'package:ecom_front_end/UI/Admin/View/Product/view.dart';
 import 'package:ecom_front_end/UI/Admin/View/ProductList/Add.dart';
@@ -28,6 +29,10 @@ class _AdminHomeState extends State<AdminHome> {
     return Scaffold(
       appBar: AppBar(
         title: "Admin Home".text.make(),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                context, SwitchHome.route, (route) => false)),
       ),
       floatingActionButton:
           FloatingActionButton(onPressed: () => switchCreatePhase(context)),

@@ -35,7 +35,7 @@ class CommonProfileView extends StatelessWidget {
               ApiNames.getApiNames(api),
               commonProfile.id,
               commonProfile.isVerified == null
-                  ? true
+                  ? false
                   : !commonProfile.isVerified),
         ),
         callback("commonProfile", commonProfile.id)
