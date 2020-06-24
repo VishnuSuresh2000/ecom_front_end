@@ -10,7 +10,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 class CustomerHome extends StatefulWidget {
   static String route = "CustomerHome";
-  static bool dev=false;
+  //is true then it is on online db
+  static bool dev=true;
   static String tempUserId = dev? "5ef361d4ed35de1b9049ef02":"5eef605d8c9c2135341dde77";
   @override
   _CustomerHomeState createState() => _CustomerHomeState();

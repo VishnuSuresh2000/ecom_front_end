@@ -8,7 +8,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 
 class SellerHome extends StatefulWidget {
-  static bool dev=false;
+  //is true then it is on online db
+  static bool dev=true;
   static String sellerId=dev?"5ef0b7897546f921142fab2a":"5eecb7d37ea9451a48d3dae9";
   static String route="sellerHome";
   @override

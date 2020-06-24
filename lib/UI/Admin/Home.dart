@@ -143,6 +143,7 @@ class _AdminHomeState extends State<AdminHome> {
                       CommonProfile.fromMap(data[index])),
                   (id) => deleteRecord(
                       context, ApiNames.getApiNames(api), id, AdminHome.route)),
+                      api: api,
             );
           case apiNames.poductList:
             return ProductListView(
