@@ -20,6 +20,11 @@ class SellerHome extends StatefulWidget {
 class _SellerHomeState extends State<SellerHome> {
   @override
   Widget build(BuildContext context) {
+    List buttons = <String>[
+      ApiNames.getApiNames(apiNames.poductList),
+      ApiNames.getApiNames(apiNames.cart)
+    ];
+    apiNames api = apiNames.poductList;
     return Scaffold(
       appBar: AppBar(
         title: "Seller Delivary Secttion".text.make(),
@@ -29,41 +34,57 @@ class _SellerHomeState extends State<SellerHome> {
                 context, SwitchHome.route, (route) => false)),
       ),
       body: VxBox(
-              child: FutureBuilder(
-                  future: ApiCalls.customGet(
-                      ApiNames.getApiNames(apiNames.cart),
-                      "sellerCart/${SellerHome.sellerId}"),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                        return errorBlock("An Error On the Network Connection");
-                      case ConnectionState.active:
-                      case ConnectionState.waiting:
-                        return CircularProgressIndicator()
-                            .box
-                            .alignCenter
-                            .make()
-                            .wh10(context);
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return errorBlock(
-                              "${snapshot.error.toString()}from futher builder");
-                        }
-
-                        // return Container(child: snapshot.data.toString().text.make(),);
-
-                        List data = snapshot.data;
-                        return ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return SellerCartView(
-                                cart: Cart.fromMap(data[index]),
-                              );
-                            });
-                    }
-                    return null;
-                  }).wThreeForth(context).centered().py16())
-          .make(),
+          child: ListView(
+        children: [
+          HStack(
+            [
+              ...buttons.map((e) => topLayerButton(
+                      e.toString().firstLetterUpperCase(),
+                      e == ApiNames.getApiNames(api), (String value) {
+                    api = ApiNames.getApi(value);
+                    setState(() {});
+                  }))
+            ],
+            alignment: MainAxisAlignment.spaceAround,
+          ),
+        ],
+      )).make(),
     );
+  }
+
+  Widget futherSection() {
+    return FutureBuilder(
+        future: ApiCalls.customGet(ApiNames.getApiNames(apiNames.cart),
+            "sellerCart/${SellerHome.sellerId}"),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return errorBlock("An Error On the Network Connection");
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return CircularProgressIndicator()
+                  .box
+                  .alignCenter
+                  .make()
+                  .wh10(context);
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return errorBlock(
+                    "${snapshot.error.toString()}from futher builder");
+              }
+
+              // return Container(child: snapshot.data.toString().text.make(),);
+
+              List data = snapshot.data;
+              return ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return SellerCartView(
+                      cart: Cart.fromMap(data[index]),
+                    );
+                  });
+          }
+          return null;
+        }).wThreeForth(context).centered().py16();
   }
 }

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 class ApiCalls {
   static bool dev=false;
   static var _client = Dio();
-  static String _host = dev ?"http://localhost:8080":"https://immense-meadow-48383.herokuapp.com";
+  static String _host = dev ?"http://localhost:80":"https://beru-server.herokuapp.com";
 
   static Future<List> read(String section) async {
     try {
