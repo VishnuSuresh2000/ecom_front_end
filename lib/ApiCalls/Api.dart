@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class ApiCalls {
-  static bool dev=false;
+  static bool dev = false;
   static var _client = Dio();
-  static String _host = dev ?"http://localhost:80":"https://beru-server.herokuapp.com";
+  static String _host =
+      dev ? "http://localhost:80" : "https://beru-server.herokuapp.com";
 
   static Future<List> read(String section) async {
     try {
@@ -74,7 +75,6 @@ class ApiCalls {
     try {
       var res = await _client.get(
         "$_host/${section.toLowerCase()}/$urlSection",
-        
       );
       return res.data['data'];
     } on DioError catch (e) {
@@ -88,8 +88,7 @@ class ApiCalls {
   static Future customPut(
       String section, String urlSection, Map<String, dynamic> data) async {
     try {
-      var res = await _client.put(
-          "$_host/${section.toLowerCase()}/$urlSection",
+      var res = await _client.put("$_host/${section.toLowerCase()}/$urlSection",
           options: Options(headers: {"Content-Type": "application/json"}),
           data: jsonEncode(data));
       return res.data['data'];
@@ -100,6 +99,7 @@ class ApiCalls {
       throw e;
     }
   }
+
   static Future customPost(
       String section, String urlSection, Map<String, dynamic> data) async {
     try {
@@ -115,7 +115,6 @@ class ApiCalls {
       throw e;
     }
   }
-
 
   // static readStreamData() async {
   //   Response<ResponseBody>  res = await _client.get("http://localhost:8080/productlist/",
