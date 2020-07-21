@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class ApiCalls {
-  static bool dev = false;
+  static bool dev = true;
   static var _client = Dio();
   static String _host =
       dev ? "http://localhost:80" : "https://beru-server.herokuapp.com";
@@ -25,7 +25,7 @@ class ApiCalls {
   static Future<String> create(
       String section, Map<String, dynamic> data) async {
     try {
-      var res = await _client.post("$_host/${section.toLowerCase()}",
+      var res = await _client.post("$_host/$section",
           options: Options(headers: {"Content-Type": "application/json"}),
           data: jsonEncode(data));
 

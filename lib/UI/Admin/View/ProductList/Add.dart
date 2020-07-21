@@ -11,7 +11,7 @@ import 'package:velocity_x/velocity_x.dart';
 void addProductList(BuildContext context) {
   String channel = "Create";
   GlobalKey<FormState> _form = GlobalKey<FormState>();
-  ProductList temp = ProductList();
+  Salles temp = Salles();
   Future<List<List>> sec = Future.wait([
     ApiCalls.read('product'),
     ApiCalls.read('seller'),
@@ -44,6 +44,7 @@ void addProductList(BuildContext context) {
                     if (snapshot.hasError) {
                       return errorBlock(snapshot.error);
                     }
+                    String productId = " ";
                     List temp2 = snapshot.data[0];
                     List<Product> productList =
                         temp2.map((e) => Product.fromMap(e)).toList();
@@ -53,7 +54,7 @@ void addProductList(BuildContext context) {
                     temp2 = snapshot.data[2];
                     List<CommonProfile> farmerList =
                         temp2.map((e) => CommonProfile.fromMap(e)).toList();
-                    temp.toShow=false;
+                    temp.toShow = false;
                     return AlertDialog(
                       content: Form(
                         key: _form,
@@ -77,7 +78,7 @@ void addProductList(BuildContext context) {
                                       ))
                                   .toList(),
                               onChanged: (value) {
-                                temp.product = value;
+                                productId = value.id;
                               },
                               validator: (value) {
                                 if (value == null) {
@@ -86,14 +87,13 @@ void addProductList(BuildContext context) {
                                 return null;
                               },
                               onSaved: (value) {
-                                temp.product = value;
+                                productId = value.id;
                               },
                             ),
                             VxBox().make().h4(context),
                             TextFormField(
                               keyboardType: TextInputType.number,
                               validator: (String value) {
-                               
                                 if (value.isEmpty) {
                                   return "Plz enter Count Of Product";
                                 }
@@ -116,7 +116,6 @@ void addProductList(BuildContext context) {
                             TextFormField(
                               keyboardType: TextInputType.number,
                               validator: (String value) {
-                               
                                 if (value.isEmpty) {
                                   return "Plz enter Amount Of Product";
                                 }
@@ -195,7 +194,7 @@ void addProductList(BuildContext context) {
                                   onChanged: (value) {
                                     ls.toShow = value;
                                     temp.toShow = ls.toShow;
-                                    print(temp.toShow);
+                                  
                                   },
                                   title: "Show the Product".text.make(),
                                 );
@@ -208,12 +207,11 @@ void addProductList(BuildContext context) {
                                   onPressed: () async {
                                     if (_form.currentState.validate()) {
                                       _form.currentState.save();
-                                      
+                                      print(temp.toMapToAdd());
                                       try {
                                         var res = await ApiCalls.create(
-                                            "${ApiNames.getApiNames(apiNames.poductList)}",
-                                            temp.toMapForCreate());
-
+                                            "${ApiNames.getApiNames(apiNames.poductList)}/$productId",
+                                            temp.toMapToAdd());
                                         showMsgAlertAndNamedRoute(context, res,
                                             AdminHome.route, false);
                                       } catch (e) {

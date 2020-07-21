@@ -10,16 +10,17 @@ class SellerCartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: "Product : ${cart.productList.product.name.firstLetterUpperCase()}"
+      //${cart.productList.product.name.firstLetterUpperCase()}
+      title: "Product : "
           .text
           .make(),
       children: [
-        ListTile(
-          title:
-              "Product : ${cart.productList.product.name.firstLetterUpperCase()}"
-                  .text
-                  .make(),
-        ),
+        // ListTile(
+        //   title:
+        //       "Product : ${cart.productList.product.name.firstLetterUpperCase()}"
+        //           .text
+        //           .make(),
+        // ),
         ListTile(
           title: "Count : ${cart.count.toString().firstLetterUpperCase()}"
               .text

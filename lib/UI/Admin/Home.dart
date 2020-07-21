@@ -79,6 +79,11 @@ class _AdminHomeState extends State<AdminHome> {
                 return errorBlock(
                     "${snapshot.error.toString()}from futher builder");
               }
+              // print("Test section");
+              // print(snapshot.data );
+              // return Container(
+              //   child: Text("Test"),
+              // );
               return switchSections(snapshot.data);
           }
           return null;
@@ -148,11 +153,12 @@ class _AdminHomeState extends State<AdminHome> {
                       CommonProfile.fromMap(data[index])),
                   (id) => deleteRecord(
                       context, ApiNames.getApiNames(api), id, AdminHome.route)),
-                      api: api,
+              api: api,
             );
           case apiNames.poductList:
+            // return Container(child: Text("Test Section"),);
             return ProductListView(
-              productlist: ProductList.fromMap(data[index]),
+              productlist: data[index],
             );
           default:
             break;

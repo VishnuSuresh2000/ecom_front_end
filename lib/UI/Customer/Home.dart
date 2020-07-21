@@ -78,7 +78,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                   itemCount: data.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ProductListView(
-                      productlist: ProductList.fromMap(data[index]),
+                      productlist: Salles.fromMap(data[index]),
                       customedId: CustomerHome.tempUserId,
                     );
                   });

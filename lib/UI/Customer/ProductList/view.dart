@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ProductListView extends StatelessWidget {
-  final ProductList productlist;
+  final Salles productlist;
   final String customedId;
 
   const ProductListView({Key key, this.productlist, this.customedId})
@@ -12,30 +12,31 @@ class ProductListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: "Name : ${productlist.product.name.firstLetterUpperCase()}"
+     // ${productlist.product.name.firstLetterUpperCase()}
+      title: "Name : "
           .text
           .xl
           .make(),
       children: [
-        ListTile(
-          title:
-              "Category\t:\t${productlist.product.category.name.firstLetterUpperCase()}"
-                  .text
-                  .make(),
-        ),
+        // ListTile(
+        //   title:
+        //       "Category\t:\t${productlist.product.category.name.firstLetterUpperCase()}"
+        //           .text
+        //           .make(),
+        // ),
         ListTile(
           title: "Amount\t:\t${productlist.amount}".text.make(),
         ),
-        ListTile(
-          title: "Seller\t:\t${productlist.seller.name.firstLetterUpperCase()}"
-              .text
-              .make(),
-        ),
-        ListTile(
-          title: "Farmer \t:\t${productlist.farmer.name.firstLetterUpperCase()}"
-              .text
-              .make(),
-        ),
+        // ListTile(
+        //   title: "Seller\t:\t${productlist.seller.name.firstLetterUpperCase()}"
+        //       .text
+        //       .make(),
+        // ),
+        // ListTile(
+        //   title: "Farmer \t:\t${productlist.farmer.name.firstLetterUpperCase()}"
+        //       .text
+        //       .make(),
+        // ),
         ListTile(
           title: "Count\t:\t${productlist.count}".text.make(),
         ),

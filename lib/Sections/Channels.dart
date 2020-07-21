@@ -6,7 +6,7 @@ class ApiNames {
     apiNames.product: "product",
     apiNames.farmer: "farmer",
     apiNames.seller: "seller",
-    apiNames.poductList:"productlist",
+    apiNames.poductList:"salles",
     apiNames.cart:"cart"
   };
   static String getApiNames(apiNames data) {

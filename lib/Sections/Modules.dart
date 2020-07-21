@@ -4,12 +4,14 @@ class Product {
   String _id;
   bool inKg;
   CategorySection category;
+  List<Salles> list;
+
   Map<String, dynamic> toMap() {
     return {
       '_id': _id,
       "name": name,
       "description": description,
-      'category': category.toMap(),
+      'category': category == null ? null : category.toMap(),
       'inKg': inKg
     };
   }
@@ -17,10 +19,13 @@ class Product {
   Product();
 
   Product.fromMap(Map<String, dynamic> temp) {
+    
     this._id = temp['_id'];
     this.name = temp['name'];
     this.description = temp['description'];
-    this.category = CategorySection.fromMap(temp['category']);
+    this.category = temp['category'] is String
+        ? CategorySection.onlyId(temp['category'])
+        : CategorySection.fromMap(temp['category']);
     this.inKg = temp['inKg'];
   }
   Product.fromMapMinimal(Map<String, dynamic> temp) {
@@ -49,12 +54,19 @@ class CategorySection {
     return {'_id': _id, 'name': name};
   }
 
+  CategorySection.onlyId(String id) {
+    this._id = id;
+  }
   CategorySection.fromMap(Map<String, dynamic> temp) {
-    this.name = temp['name'];
-    this._id = temp['_id'];
+    this.name = temp['name'] ?? null;
+    this._id = temp['_id'] ?? null;
   }
   String get id {
     return this._id;
+  }
+
+  set id(String id) {
+    this._id = id;
   }
 }
 
@@ -85,21 +97,20 @@ class CommonProfile {
   CommonProfile.fromMap(Map<String, dynamic> temp) {
     this._id = temp['_id'];
     this.name = temp['name'];
-    this.address = temp['address'];
-    this.phoneNumber = temp['phoneNumber'];
-    this.email = temp['email'];
-    this.isVerified = temp['isVerified'];
+    this.address = temp['address'] ?? null;
+    this.phoneNumber = temp['phoneNumber'] ?? null;
+    this.email = temp['email'] ?? null;
+    this.isVerified = temp['isVerified'] ?? null;
   }
 }
 
-class ProductList {
+class Salles {
   String _id;
-  Product product;
   CommonProfile seller;
   CommonProfile farmer;
   int count;
-  bool isVerified;
-  bool toShow;
+  bool isVerified=false;
+  bool toShow=false;
   DateTime dateOfCreation;
   DateTime dateOfUpdate;
   int amount;
@@ -108,39 +119,39 @@ class ProductList {
     return this._id;
   }
 
-  ProductList();
+  Salles();
 
-  ProductList.fromMap(Map<String, dynamic> temp) {
+  Salles.fromMap(Map<String, dynamic> temp) {
     this._id = temp['_id'];
-    this.product = Product.fromMap(temp['product_id']);
     this.farmer = CommonProfile.fromMap(temp['farmer_id']);
     this.seller = CommonProfile.fromMap(temp['seller_id']);
-    this.count = temp['count'];
+    this.count = temp['count']??null;
     this.isVerified = temp['isVerified'] ?? null;
-    this.toShow = temp['toShow'];
+    this.toShow = temp['toShow']??null;
     this.dateOfCreation = temp['dateOfCreation'] == null
         ? null
         : DateTime.parse(temp['dateOfCreation']);
     this.dateOfUpdate = temp['dateOfUpdate'] == null
         ? null
         : DateTime.parse(temp['dateOfUpdate']);
-    this.amount = temp['amount'];
-  }
-
-  ProductList.fromMapMinimal(Map<String, dynamic> temp) {
-    this._id = temp['_id'];
-    this.product = Product.fromMapMinimal(temp['product_id']);
-    this.amount = temp['amount'];
-  }
-
-  Map<String, dynamic> toMaopMinamal() {
-    return {'_id': _id, 'amount': amount, 'product_id': product.toMapMinimal()};
+    this.amount = temp['amount']??null;
   }
 
   Map<String, dynamic> toMap() {
     return {
       '_id': _id,
-      'product_id': product.id,
+      'farmer_id': farmer.toMap(),
+      'seller_id': seller.toMap(),
+      'count': count,
+      'isVerified': isVerified,
+      'toShow': toShow,
+      'dateOfCreation': dateOfCreation,
+      'dateOfUpdate': dateOfUpdate,
+      'amount': amount
+    };
+  }
+  Map<String, dynamic> toMapToAdd() {
+    return {
       'farmer_id': farmer.id,
       'seller_id': seller.id,
       'count': count,
@@ -151,17 +162,6 @@ class ProductList {
       'amount': amount
     };
   }
-
-  Map<String, dynamic> toMapForCreate() {
-    return {
-      'product_id': product.id,
-      'farmer_id': farmer.id,
-      'seller_id': seller.id,
-      'count': count,
-      'toShow': toShow,
-      'amount': amount
-    };
-  }
 }
 
 class Cart {
@@ -169,7 +169,7 @@ class Cart {
   bool paymentComplete;
   DateTime dataOfCreation;
   String customerId;
-  ProductList productList;
+  Salles productList;
   int count;
   bool completed;
 
@@ -177,9 +177,9 @@ class Cart {
     this._id = temp['_id'];
     this.paymentComplete = temp['paymentComplete'];
     this.customerId = temp['customer_id'];
-    this.productList = ProductList.fromMapMinimal(temp['productlist_id']);
+    // this.productList = Salles.fromMapMinimal(temp['productlist_id']);
     this.count = temp['count'];
-    this.completed=temp['completed']==null?false:temp['completed'];
+    this.completed = temp['completed'] == null ? false : temp['completed'];
   }
   Cart();
   String get id {
@@ -191,7 +191,7 @@ class Cart {
       '_id': this._id,
       'paymentComplete': this.paymentComplete,
       'customer_id': this.customerId,
-      'productlist_id': this.productList.toMaopMinamal(),
+      // 'productlist_id': this.productList.toMaopMinamal(),
       'count': this.count
     };
   }

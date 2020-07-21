@@ -13,17 +13,18 @@ class CartView extends StatelessWidget {
   const CartView({Key key, this.cart}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    //${cart.productList.product.name.firstLetterUpperCase()}
     return ExpansionTile(
-      title: "Product : ${cart.productList.product.name.firstLetterUpperCase()}"
+      title: "Product : "
           .text
           .make(),
       children: [
-        ListTile(
-          title:
-              "Product : ${cart.productList.product.name.firstLetterUpperCase()}"
-                  .text
-                  .make(),
-        ),
+        // ListTile(
+        //   title:
+        //       "Product : ${cart.productList.product.name.firstLetterUpperCase()}"
+        //           .text
+        //           .make(),
+        // ),
         ListTile(
           title: "Count : ${cart.count.toString().firstLetterUpperCase()}"
               .text
