@@ -43,7 +43,7 @@ void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
                     List temp2 = snapshot.data;
                     List<CategorySection> cat =
                         temp2.map((e) => CategorySection.fromMap(e)).toList();
-                    createOrUpdate?temp.inKg=true:null;
+                    createOrUpdate ? temp.inKg = true : null;
                     return AlertDialog(
                       content: VxBox(
                           child: ListView(
@@ -119,18 +119,44 @@ void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
                                     },
                                   ),
                                   VxBox().make().h4(context),
+                                  TextFormField(
+                                     initialValue: createOrUpdate
+                                        ? null
+                                        : temp.amount.toString(),
+                                    keyboardType: TextInputType.number,
+                                    validator: (String value) {
+                                      if (value.isEmpty) {
+                                        return "Plz enter Amount Of Product";
+                                      }
+                                      if (value.isNotEmpty) {
+                                        try {
+                                          int.parse(value);
+                                        } catch (e) {
+                                          return "Must be A Number";
+                                        }
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (String value) {
+                                      temp.amount = int.parse(value);
+                                    },
+                                    onChanged: (String value){
+                                      temp.amount = int.parse(value);
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: "Amount of the Product"),
+                                  ),
                                   ChangeNotifierProvider(
                                     create: (context) => ProductState(),
                                     child: Consumer<ProductState>(builder:
                                         (BuildContext context, ls, child) {
                                       return CheckboxListTile(
                                         value: createOrUpdate
-                                          ?  ls.inKg
-                                          :  temp.inKg,
+                                            ? ls.inKg
+                                            : temp.inKg,
                                         onChanged: (value) {
                                           ls.inKg = value;
                                           temp.inKg = ls.inKg;
-                                        
                                         },
                                         title: "In Kg".text.make(),
                                       );

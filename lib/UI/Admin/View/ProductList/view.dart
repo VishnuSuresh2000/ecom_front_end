@@ -31,20 +31,18 @@ class ProductListView extends StatelessWidget {
           .map((e) => Padding(
             padding: const EdgeInsets.all(8.0),
             child: ExpansionTile(
-                  title: "Seller\t:\t${e.seller.name.firstLetterUpperCase()} "
+                  title: "Seller\t:\t${e.seller.fullName.firstLetterUpperCase()} "
                       .text
                       .xl
                       .make(),
                   children: [
                     ListTile(
-                      title: "Farmer\t:\t${e.farmer.name.firstLetterUpperCase()} "
+                      title: "Farmer\t:\t${e.farmer.fullName.firstLetterUpperCase()} "
                           .text
                           .xl
                           .make(),
                     ),
-                    ListTile(
-                      title: "Amount\t:\t${e.amount} ".text.xl.make(),
-                    ),
+                   
                     
                     ListTile(
                       title: "Count\t:\t${e.count} ".text.xl.make(),

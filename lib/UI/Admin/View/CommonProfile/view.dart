@@ -17,7 +17,7 @@ class CommonProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       title:
-          "Name : ${commonProfile.name.firstLetterUpperCase()}".text.xl.make(),
+          "Name : ${commonProfile.fullName.firstLetterUpperCase()}".text.xl.make(),
       children: [
         ListTile(
           title: "Address\t:\t${commonProfile.address}".text.make(),
@@ -37,6 +37,27 @@ class CommonProfileView extends StatelessWidget {
               commonProfile.isVerified == null
                   ? false
                   : commonProfile.isVerified),
+        ),
+        ListTile(
+          title: "HouseName\t:\t${commonProfile.address.houseName}".text.make(),
+        ),
+        ListTile(
+          title: "Locality\t:\t${commonProfile.address.locality}".text.make(),
+        ),
+        ListTile(
+          title: "City \t:\t${commonProfile.address.city}".text.make(),
+        ),
+        ListTile(
+          title: "District \t:\t${commonProfile.address.district}".text.make(),
+        ),
+        ListTile(
+          title: "State \t:\t${commonProfile.address.state}".text.make(),
+        ),
+        ListTile(
+          title: "Pincode \t:\t${commonProfile.address.pinCode}".text.make(),
+        ),
+        ListTile(
+          title: "Alternate Phone Number \t:\t${commonProfile.address.alternateNumber}".text.make(),
         ),
         callback("commonProfile", commonProfile.id)
       ],

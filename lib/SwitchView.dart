@@ -18,11 +18,11 @@ class _SwitchHomeState extends State<SwitchHome> {
         RaisedButton(onPressed: ()=>Navigator.of(context).pushNamed(AdminHome.route),
         child: "AdminHome".text.xl2.make(),),
         VxBox().make().w10(context),
-        RaisedButton(onPressed: ()=>Navigator.of(context).pushNamed(CustomerHome.route),
-        child: "CustomerHome".text.xl2.make(),),
-        VxBox().make().w10(context),
-        RaisedButton(onPressed: ()=>Navigator.of(context).pushNamed(SellerHome.route),
-        child: "SellerHome".text.xl2.make(),),
+        // RaisedButton(onPressed: ()=>Navigator.of(context).pushNamed(CustomerHome.route),
+        // child: "CustomerHome".text.xl2.make(),),
+        // VxBox().make().w10(context),
+        // RaisedButton(onPressed: ()=>Navigator.of(context).pushNamed(SellerHome.route),
+        // child: "SellerHome".text.xl2.make(),),
       ],crossAlignment: CrossAxisAlignment.center,alignment: MainAxisAlignment.center,)
     ;
   }

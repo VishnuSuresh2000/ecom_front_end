@@ -79,11 +79,6 @@ class _AdminHomeState extends State<AdminHome> {
                 return errorBlock(
                     "${snapshot.error.toString()}from futher builder");
               }
-              // print("Test section");
-              // print(snapshot.data );
-              // return Container(
-              //   child: Text("Test"),
-              // );
               return switchSections(snapshot.data);
           }
           return null;

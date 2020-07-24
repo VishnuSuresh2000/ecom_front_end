@@ -112,35 +112,14 @@ void addProductList(BuildContext context) {
                               decoration: InputDecoration(
                                   hintText: "Count of The Product"),
                             ),
-                            VxBox().make().h4(context),
-                            TextFormField(
-                              keyboardType: TextInputType.number,
-                              validator: (String value) {
-                                if (value.isEmpty) {
-                                  return "Plz enter Amount Of Product";
-                                }
-                                if (value.isNotEmpty) {
-                                  try {
-                                    int.parse(value);
-                                  } catch (e) {
-                                    return "Must be A Number";
-                                  }
-                                }
-                                return null;
-                              },
-                              onSaved: (String value) {
-                                temp.amount = int.parse(value);
-                              },
-                              decoration: InputDecoration(
-                                  hintText: "Amount of the Product"),
-                            ),
+                            
                             VxBox().make().h4(context),
                             DropdownButtonFormField<CommonProfile>(
                               hint: "Select Seller".text.make(),
                               items: sellerList
                                   .map((CommonProfile e) => DropdownMenuItem(
                                         child: Text(
-                                          "${e.name}".firstLetterUpperCase(),
+                                          "${e.fullName}".firstLetterUpperCase(),
                                         ),
                                         key: ValueKey(e.id),
                                         value: e,
@@ -165,7 +144,7 @@ void addProductList(BuildContext context) {
                               items: farmerList
                                   .map((CommonProfile e) => DropdownMenuItem(
                                         child: Text(
-                                          "${e.name}".firstLetterUpperCase(),
+                                          "${e.fullName}".firstLetterUpperCase(),
                                         ),
                                         key: ValueKey(e.id),
                                         value: e,

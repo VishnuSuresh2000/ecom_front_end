@@ -5,21 +5,21 @@ class Product {
   bool inKg;
   CategorySection category;
   List<Salles> list;
-
+  int amount;
   Map<String, dynamic> toMap() {
     return {
       '_id': _id,
       "name": name,
       "description": description,
       'category': category == null ? null : category.toMap(),
-      'inKg': inKg
+      'inKg': inKg,
+      'amount': amount
     };
   }
 
   Product();
 
   Product.fromMap(Map<String, dynamic> temp) {
-    
     this._id = temp['_id'];
     this.name = temp['name'];
     this.description = temp['description'];
@@ -27,6 +27,7 @@ class Product {
         ? CategorySection.onlyId(temp['category'])
         : CategorySection.fromMap(temp['category']);
     this.inKg = temp['inKg'];
+    this.amount = temp['amount'] ?? null;
   }
   Product.fromMapMinimal(Map<String, dynamic> temp) {
     this._id = temp['_id'];
@@ -71,36 +72,91 @@ class CategorySection {
 }
 
 class CommonProfile {
-  String name;
-  String address;
+  String firstName;
+  String lastName;
   int phoneNumber;
   String email;
+  Address address;
   String _id;
+  bool sex;
   bool isVerified;
-  Map<String, dynamic> toMap() {
-    return {
-      '_id': _id,
-      'name': name,
-      'address': address,
-      'phoneNumber': phoneNumber,
-      'email': email,
-      'isVerified': isVerified
-    };
-  }
 
-  CommonProfile();
+  String get fullName {
+    return "$firstName ${lastName ?? ""}";
+  }
 
   String get id {
-    return this._id;
+    return _id;
   }
 
-  CommonProfile.fromMap(Map<String, dynamic> temp) {
-    this._id = temp['_id'];
-    this.name = temp['name'];
-    this.address = temp['address'] ?? null;
-    this.phoneNumber = temp['phoneNumber'] ?? null;
-    this.email = temp['email'] ?? null;
-    this.isVerified = temp['isVerified'] ?? null;
+  set id(String id) {
+    this._id = id;
+  }
+
+  CommonProfile() {
+    this.address = Address();
+  }
+  CommonProfile.fromMap(Map<String, dynamic> data) {
+    this._id = data["_id"] ?? null;
+    this.firstName = data['firstName'] ?? null;
+    this.lastName = data['lastName'] ?? null;
+    this.phoneNumber = data['phoneNumber'] ?? null;
+    this.sex = data['sex'] ?? null;
+    this.address =
+        data['address'] == null ? Address() : Address.fromMap(data['address']);
+    this.email = data['email'] ?? null;
+    this.isVerified = data['isVerified'] ?? null;
+  }
+  CommonProfile.fromMapTest(Map<String, dynamic> data) {
+    this.firstName = data['name'] ?? null;
+    this.lastName = data['lastName'] ?? null;
+    this.phoneNumber = data['phoneNumber'] ?? null;
+    this.sex = data['sex'] ?? null;
+    this.address =
+        data['address'] == null ? null : Address.fromMap(data['address']);
+    this.email = data['email'] ?? null;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'firstName': this.firstName ?? null,
+      'lastName': this.lastName ?? null,
+      'phoneNumber': this.phoneNumber ?? null,
+      'sex': this.sex ?? null,
+      'address': this.address == null ? null : this.address.toMap(),
+      'email': this.email ?? null
+    };
+  }
+}
+
+class Address {
+  String houseName;
+  String locality;
+  String city;
+  String district;
+  String state;
+  int pinCode;
+  int alternateNumber;
+  Address();
+  Address.fromMap(Map<String, dynamic> data) {
+    this.houseName = data['houseName'];
+    this.locality = data['locality'];
+    this.pinCode = data['pinCode'];
+    this.city = data['city'];
+    this.district = data['district'];
+    this.state = data['state'];
+    this.alternateNumber = data['alternateNumber'] ?? null;
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      'houseName': this.houseName ?? null,
+      'locality': this.locality ?? null,
+      'pinCode': this.pinCode ?? null,
+      'city': this.city ?? null,
+      'district': this.district ?? null,
+      'state': this.state ?? null,
+      'alternateNumber': this.alternateNumber ?? null,
+    };
   }
 }
 
@@ -109,11 +165,10 @@ class Salles {
   CommonProfile seller;
   CommonProfile farmer;
   int count;
-  bool isVerified=false;
-  bool toShow=false;
+  bool isVerified = false;
+  bool toShow = false;
   DateTime dateOfCreation;
   DateTime dateOfUpdate;
-  int amount;
 
   String get id {
     return this._id;
@@ -125,16 +180,15 @@ class Salles {
     this._id = temp['_id'];
     this.farmer = CommonProfile.fromMap(temp['farmer_id']);
     this.seller = CommonProfile.fromMap(temp['seller_id']);
-    this.count = temp['count']??null;
+    this.count = temp['count'] ?? null;
     this.isVerified = temp['isVerified'] ?? null;
-    this.toShow = temp['toShow']??null;
+    this.toShow = temp['toShow'] ?? null;
     this.dateOfCreation = temp['dateOfCreation'] == null
         ? null
         : DateTime.parse(temp['dateOfCreation']);
     this.dateOfUpdate = temp['dateOfUpdate'] == null
         ? null
         : DateTime.parse(temp['dateOfUpdate']);
-    this.amount = temp['amount']??null;
   }
 
   Map<String, dynamic> toMap() {
@@ -147,9 +201,9 @@ class Salles {
       'toShow': toShow,
       'dateOfCreation': dateOfCreation,
       'dateOfUpdate': dateOfUpdate,
-      'amount': amount
     };
   }
+
   Map<String, dynamic> toMapToAdd() {
     return {
       'farmer_id': farmer.id,
@@ -159,7 +213,6 @@ class Salles {
       'toShow': toShow,
       'dateOfCreation': dateOfCreation,
       'dateOfUpdate': dateOfUpdate,
-      'amount': amount
     };
   }
 }

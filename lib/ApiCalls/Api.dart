@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class ApiCalls {
-  static bool dev = false;
+  static bool dev = true;
   static var _client = Dio();
   static String _host =
       dev ? "http://localhost:80" : "https://beru-server.herokuapp.com";
