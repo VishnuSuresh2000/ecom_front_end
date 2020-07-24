@@ -13,7 +13,7 @@ void addOrUpdateCommonProfile(
   String channel = createOrUpdate ? "Create" : "Update";
   GlobalKey<FormState> _form = GlobalKey<FormState>();
   CommonProfile temp = createOrUpdate ? CommonProfile() : commonProfile;
-  createOrUpdate ? temp.sex = true : null;
+  temp.sex =createOrUpdate ?  true : null;
   // String tempNo = createOrUpdate ? null : temp.phoneNumber.toString();
   showDialog(
       context: context,

@@ -1,6 +1,4 @@
 import 'package:ecom_front_end/UI/Admin/Home.dart';
-import 'package:ecom_front_end/UI/Customer/Home.dart';
-import 'package:ecom_front_end/UI/Seller/home.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 

@@ -43,7 +43,7 @@ void addOrUpdateProduct(BuildContext context, bool createOrUpdate,
                     List temp2 = snapshot.data;
                     List<CategorySection> cat =
                         temp2.map((e) => CategorySection.fromMap(e)).toList();
-                    createOrUpdate ? temp.inKg = true : null;
+                    temp.inKg = createOrUpdate ? true : null;
                     return AlertDialog(
                       content: VxBox(
                           child: ListView(
