@@ -8,8 +8,10 @@ import 'package:ecom_front_end/UI/Admin/CustomSection.dart';
 import 'package:ecom_front_end/UI/Admin/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
+// ignore: must_be_immutable
 class ProductView extends StatelessWidget {
   final Product product;
   final Function callback;
