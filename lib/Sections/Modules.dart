@@ -2,6 +2,7 @@ class Product {
   String name;
   String description;
   String _id;
+  bool hasImg;
   bool inKg;
   CategorySection category;
   List<Salles> list;
@@ -20,6 +21,7 @@ class Product {
   Product();
 
   Product.fromMap(Map<String, dynamic> temp) {
+    this.hasImg = temp['hasImg']??null;
     this._id = temp['_id'];
     this.name = temp['name'];
     this.description = temp['description'];
