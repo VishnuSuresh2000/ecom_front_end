@@ -20,7 +20,7 @@ class CommonProfileView extends StatelessWidget {
           "Name : ${commonProfile.fullName.firstLetterUpperCase()}".text.xl.make(),
       children: [
         ListTile(
-          title: "Address\t:\t${commonProfile.address}".text.make(),
+          title: "Sex\t:\t${commonProfile.sex?'Male':'Female'}".text.make(),
         ),
         ListTile(
           title: "Phone Number\t:\t${commonProfile.phoneNumber}".text.make(),

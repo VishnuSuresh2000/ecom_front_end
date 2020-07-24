@@ -58,7 +58,7 @@ void addOrUpdateCommonProfile(
                             InputDecoration(hintText: "Enter $api Last Name"),
                       ),
                       ChangeNotifierProvider(
-                        create: (context) => ProductState(),
+                        create: (context) => ProductState(value: temp.sex),
                         child: Consumer<ProductState>(
                             builder: (BuildContext context, ls, child) {
                           return CheckboxListTile(
