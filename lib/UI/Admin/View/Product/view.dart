@@ -13,8 +13,8 @@ import 'dart:html' as html;
 class ProductView extends StatelessWidget {
   final Product product;
   final Function callback;
-  List<int> _selectedFile;
-  Uint8List _bytesData;
+  List<int> selectedFile;
+  Uint8List bytesData;
   String filename;
   ProductView({Key key, this.product, this.callback}) : super(key: key);
 
@@ -87,10 +87,10 @@ class ProductView extends StatelessWidget {
   void _handleResult(
       Object result, Product product, BuildContext context) async {
     try {
-      _bytesData = Base64Decoder().convert(result.toString().split(",").last);
-      _selectedFile = _bytesData;
+      bytesData = Base64Decoder().convert(result.toString().split(",").last);
+      selectedFile = bytesData;
       FormData data = FormData.fromMap({
-        'imgUrl': MultipartFile.fromBytes(_bytesData,
+        'imgUrl': MultipartFile.fromBytes(bytesData,
             filename: "${product.name}.png")
       });
       var response = await ApiCalls.productImageUpload(data, product.id);
