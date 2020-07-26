@@ -41,8 +41,9 @@ ecom_front_end.iml
 .packages
 .pub-cache/
 .pub/
+!/build/
+/build/*
 !/build/web/
-/build/
 
 # Web related
 lib/generated_plugin_registrant.dart
