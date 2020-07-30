@@ -116,10 +116,10 @@ class ApiCalls {
     }
   }
 
-  static Future productImageUpload(FormData data,String id) async {
+  static Future productImageUpload(FormData data,String id,String section) async {
     try {
       var res = await _client.post(
-          "$host/product/uploadImg/$id",
+          "$host/$section/uploadImg/$id",
           options: Options(headers: {"Content-Type": "application/json"}),
           data: data);
       return res.data['data'];

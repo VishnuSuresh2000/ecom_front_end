@@ -95,7 +95,7 @@ class ProductView extends StatelessWidget {
         'imgUrl': MultipartFile.fromBytes(bytesData,
             filename: "${product.name}.png")
       });
-      var response = await ApiCalls.productImageUpload(data, product.id);
+      var response = await ApiCalls.productImageUpload(data, product.id,"product");
       print(response);
       showMsgAlertAndNamedRoute(context, response, AdminHome.route, false);
     } catch (e) {

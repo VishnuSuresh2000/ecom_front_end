@@ -21,7 +21,7 @@ class Product {
   Product();
 
   Product.fromMap(Map<String, dynamic> temp) {
-    this.hasImg = temp['hasImg']??null;
+    this.hasImg = temp['hasImg'] ?? null;
     this._id = temp['_id'];
     this.name = temp['name'];
     this.description = temp['description'];
@@ -50,6 +50,7 @@ class Product {
 class CategorySection {
   String name;
   String _id;
+  bool hasImg;
 
   CategorySection();
 
@@ -63,6 +64,7 @@ class CategorySection {
   CategorySection.fromMap(Map<String, dynamic> temp) {
     this.name = temp['name'] ?? null;
     this._id = temp['_id'] ?? null;
+    this.hasImg = temp['hasImg'] ?? false;
   }
   String get id {
     return this._id;
